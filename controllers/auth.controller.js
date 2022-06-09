@@ -37,18 +37,22 @@ const login = async (req, res) => {
     const user = await User.findOne({ email: req.body.email });
 
     if (!user)
-      return res.status(400).send({ message: "Please try another password" });
+      return res
+        .status(400)
+        .send({ message: "Please try another E-mail & Password" });
 
     const match = user.checkPassword(req.body.password);
 
     if (!match)
-      return res.status(400).send({ message: "Please try another email" });
+      return res
+        .status(400)
+        .send({ message: "Please try another E-mail & Password" });
 
     const token = newToken(user);
 
     //then return token and user
 
-    res.send({ user, token });
+    res.status(200).send({ user, token });
   } catch (e) {
     res.status(500).send(e.message);
   }
